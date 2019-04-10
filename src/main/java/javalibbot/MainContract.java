@@ -9,7 +9,9 @@ public interface MainContract {
   //class with Bot
   interface Bot {
 
-    Bot getInstance(String Token);
+    void start(String Token);
+
+    Bot getInstance();
 
     List<Update> getUpdates(int limit, int offset);
 
