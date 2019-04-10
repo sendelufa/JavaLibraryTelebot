@@ -9,13 +9,12 @@ public interface MainContract {
   //class with Bot
   interface Bot {
 
-    void start(String Token);
-
-    Bot getInstance();
-
     List<Update> getUpdates(int limit, int offset);
 
     void sendMessage(ViewMessages message);
+
+    void startUpdate(int delayMillis);
+
   }
 
   //get data from db
