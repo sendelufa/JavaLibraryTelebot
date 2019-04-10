@@ -4,7 +4,6 @@ import com.pengrad.telegrambot.model.Update;
 import java.util.List;
 import javalibbot.MainContract;
 import javalibbot.MainContract.Bot;
-import javalibbot.Messages.TextMessage;
 
 public class TempClass implements MainContract.ProcessQuery {
 
@@ -18,10 +17,12 @@ public class TempClass implements MainContract.ProcessQuery {
 
           //example send message
           String text = up.message().text();
-          if (text.toLowerCase().contains("привет")) {
-            bot.sendMessage(new TextMessage(up.message().chat().id(), "привет! каг дила?"));
+          long chatId = up.message().chat().id();
+          if (text != null && text.toLowerCase().contains("привет")) {
+            bot.sendTextMessage(chatId, "88");
           } else {
-            bot.sendMessage(new TextMessage(up.message().chat().id(), "задачи " + update.size()));
+            bot.sendTextMessage(chatId, "задачи " + update.size());
+
           }
         }
         try {

@@ -11,10 +11,12 @@ public interface MainContract {
 
     List<Update> getUpdates();
 
-    void sendMessage(ViewMessages message);
+    //void sendMessage(ViewMessages message);
 
     void startUpdate(int delayMillis);
 
+    //messages
+    void sendTextMessage(long chatId, String text);
   }
 
   //get data from db
@@ -34,24 +36,7 @@ public interface MainContract {
     void startQueryProcess(Bot bot);
   }
 
-  //processing requests from users
-  interface ViewMessages {
 
-    //standart text messages
-    SendMessage text(String text);
-
-    SendMessage startMessage();
-
-    SendMessage helpMessage();
-
-    //books messages
-    SendMessage searchQueryText();
-
-    SendMessage book(String[] book);
-
-    SendMessage booksList(List<String[]> books);
-
-  }
 
 }
 

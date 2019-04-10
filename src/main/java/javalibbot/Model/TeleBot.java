@@ -6,7 +6,6 @@ import com.pengrad.telegrambot.request.*;
 import java.util.ArrayList;
 import java.util.List;
 import javalibbot.MainContract;
-import javalibbot.MainContract.ViewMessages;
 
 public class TeleBot extends TelegramBot implements MainContract.Bot {
 
@@ -25,11 +24,6 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
     //clear cache of tasks
     updateTask = new ArrayList<>();
     return ret;
-  }
-
-  @Override
-  public void sendMessage(ViewMessages message) {
-    this.execute(message.text(""));
   }
 
   @Override
@@ -54,5 +48,10 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
     });
 
     th.start();
+  }
+
+  @Override
+  public void sendTextMessage(long chatId, String text) {
+    this.execute(new SendMessage(chatId, text));
   }
 }
