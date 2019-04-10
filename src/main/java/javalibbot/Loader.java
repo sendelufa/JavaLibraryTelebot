@@ -1,7 +1,9 @@
 package javalibbot;
 
 import javalibbot.MainContract.Bot;
+import javalibbot.MainContract.ProcessQuery;
 import javalibbot.Model.TeleBot;
+import javalibbot.Presenter.TempClass;
 import javalibbot.config.ConfigContainer;
 
 
@@ -20,6 +22,9 @@ public class Loader {
     //bot.startUpdate() - for tests
 
     // for tests
-    // bot.startUpdate(3000);
+    bot.startUpdate(3000);
+
+    ProcessQuery processQuery = new TempClass();
+    processQuery.startQueryProccess(bot);
   }
 }

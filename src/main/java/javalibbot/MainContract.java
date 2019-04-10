@@ -9,7 +9,7 @@ public interface MainContract {
   //class with Bot
   interface Bot {
 
-    List<Update> getUpdates(int limit, int offset);
+    List<Update> getUpdates();
 
     void sendMessage(ViewMessages message);
 
