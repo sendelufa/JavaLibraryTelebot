@@ -28,13 +28,13 @@ public interface MainContract {
   }
 
   //processing requests from users
-  interface processQuery {
+  interface ProcessQuery {
 
     void startQueryProccess(Bot bot);
   }
 
   //processing requests from users
-  interface viewMessages {
+  interface ViewMessages {
 
     //standart text messages
     SendMessage text(String text);
