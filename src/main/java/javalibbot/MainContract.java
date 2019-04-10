@@ -1,7 +1,6 @@
 package javalibbot;
 
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.request.SendMessage;
 import java.util.List;
 
 public interface MainContract {
@@ -11,12 +10,12 @@ public interface MainContract {
 
     List<Update> getUpdates();
 
-    //void sendMessage(ViewMessages message);
-
     void startUpdate(int delayMillis);
 
     //messages
     void sendTextMessage(long chatId, String text);
+
+    void sendSingleSearchResult(long chatId, String[] answer);
   }
 
   //get data from db
@@ -35,7 +34,6 @@ public interface MainContract {
 
     void startQueryProcess(Bot bot);
   }
-
 
 
 }
