@@ -15,6 +15,9 @@ public class Loader {
     // Create bot and push to presenter
     final Bot bot = new TeleBot(ConfigContainer.getToken());
 
+    //place for start presenter
+
+    //bot.startUpdate() - for tests
 
     // for tests
     // bot.startUpdate(3000);

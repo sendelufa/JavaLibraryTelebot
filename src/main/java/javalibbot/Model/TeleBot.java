@@ -28,7 +28,7 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
 
   @Override
   public void sendMessage(ViewMessages message) {
-    this.execute(message.text("dd"));
+    this.execute(message.text(""));
   }
 
   @Override
@@ -37,16 +37,17 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
       int m = 0;
       while (true) {
         List<Update> update = this.getUpdates(100, m);
-        updateTask.addAll(update);
-        for (Update up : updateTask) {
+        for (Update up : update) {
+          //сдвигаем ofsset на 1 чтобы не получать прошлые сообщения при апдейте
           m = up.updateId() + 1;
+
+          //Обработка ответа
           String text = up.message().text();
-          System.out.println(up.message().text());
           if (text.toLowerCase().contains("привет")){
             this.sendMessage(new TextMessage(up.message().chat().id(), "привет! каг дила?"));
           }
           else {
-            this.sendMessage(new TextMessage(up.message().chat().id(), up.message().text()));
+            this.sendMessage(new TextMessage(up.message().chat().id(), "задачи " + update.size()));
           }
 
         }
