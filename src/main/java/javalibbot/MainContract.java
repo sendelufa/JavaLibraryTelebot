@@ -19,7 +19,7 @@ public interface MainContract {
   //get data from db
   interface DBHandler {
 
-    void getInstance();
+    DBHandler getInstance();
 
     void execute(String SQLQuery);
 
