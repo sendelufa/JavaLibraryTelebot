@@ -9,7 +9,7 @@ import javalibbot.Messages.TextMessage;
 public class TempClass implements MainContract.ProcessQuery {
 
   @Override
-  public void startQueryProccess(Bot bot) {
+  public void startQueryProcess(Bot bot) {
     Thread th = new Thread(() -> {
       while (true) {
         List<Update> update = bot.getUpdates();

@@ -25,6 +25,6 @@ public class Loader {
     bot.startUpdate(3000);
 
     ProcessQuery processQuery = new TempClass();
-    processQuery.startQueryProccess(bot);
+    processQuery.startQueryProcess(bot);
   }
 }

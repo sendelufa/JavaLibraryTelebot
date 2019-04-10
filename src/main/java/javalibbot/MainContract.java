@@ -31,7 +31,7 @@ public interface MainContract {
   //processing requests from users
   interface ProcessQuery {
 
-    void startQueryProccess(Bot bot);
+    void startQueryProcess(Bot bot);
   }
 
   //processing requests from users
