@@ -13,7 +13,7 @@ public interface MainContract {
 
     List<Update> getUpdates(int limit, int offset);
 
-    void sendMessage(viewMessages message);
+    void sendMessage(ViewMessages message);
   }
 
   //get data from db
