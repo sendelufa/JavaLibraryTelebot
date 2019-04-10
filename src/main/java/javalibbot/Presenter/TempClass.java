@@ -15,6 +15,8 @@ public class TempClass implements MainContract.ProcessQuery {
         List<Update> update = bot.getUpdates();
         //Обработка ответа
         for (Update up : update) {
+
+          //example send message
           String text = up.message().text();
           if (text.toLowerCase().contains("привет")) {
             bot.sendMessage(new TextMessage(up.message().chat().id(), "привет! каг дила?"));
