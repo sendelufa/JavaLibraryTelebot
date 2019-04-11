@@ -2,6 +2,7 @@ package javalibbot;
 
 import javalibbot.MainContract.Bot;
 import javalibbot.MainContract.ProcessQuery;
+import javalibbot.Model.Exceptions.ShortDelayTimeBetweenUpdates;
 import javalibbot.Model.TeleBot;
 import javalibbot.Presenter.TempClass;
 import javalibbot.config.ConfigContainer;
@@ -9,7 +10,7 @@ import javalibbot.config.ConfigContainer;
 
 public class Loader {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws ShortDelayTimeBetweenUpdates {
 
     //read config strings
     ConfigContainer.read();
@@ -22,7 +23,7 @@ public class Loader {
     //bot.startUpdate() - for tests
 
     // for tests
-    bot.startUpdate(3000);
+    bot.startUpdate(ConfigContainer.getDelayUpdate());
 
     ProcessQuery processQuery = new TempClass();
     processQuery.startQueryProcess(bot);
