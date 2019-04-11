@@ -12,7 +12,7 @@ public class ConfigContainer {
 
   private static Properties props = new Properties();
 
-  private static String TOKEN = "";
+  private static String TOKEN, DOWNLOAD_REQUEST;
   private static int DELAY_UPDATE;
 
   public static void read() {
@@ -32,6 +32,8 @@ public class ConfigContainer {
     //TL Connect settings
     TOKEN = props.getProperty("TOKEN");
     DELAY_UPDATE = Integer.parseInt(props.getProperty("DELAY_UPDATE"));
+    DOWNLOAD_REQUEST = props.getProperty("DOWNLOAD_REQUEST");
+
   }
 
   public static String getToken() {
@@ -40,5 +42,9 @@ public class ConfigContainer {
 
   public static int getDelayUpdate() {
     return DELAY_UPDATE;
+  }
+
+  public static String getDownloadRequest() {
+    return DOWNLOAD_REQUEST;
   }
 }

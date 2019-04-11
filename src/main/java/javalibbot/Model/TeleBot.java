@@ -35,7 +35,7 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
   @Override
   public void startUpdate(int delayMillis) throws ShortDelayTimeBetweenUpdates {
     delay = delayMillis;
-    if (delay < 500){
+    if (delay < 500) {
       delay = 500;
       throw new ShortDelayTimeBetweenUpdates();
     }
@@ -70,7 +70,8 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
 
   @Override
   public void sendStartMessage(long chatId) {
-    this.execute(new SendMessage(chatId, "Наберите текст для поиска или выберите пункт в меню"));
+    this.execute(new SendMessage(chatId, "Наберите текст для поиска или выберите пункт в меню")
+        .replyMarkup(getInlineKeyboardStart()));
   }
 
   @Override
@@ -80,31 +81,48 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
 
   @Override
   public void sendListSearchResult(long chatId, List<String[]> list) {
+      String text = "";
+      if (list != null && list.size() > 0){
+        for (String[] book : list){
+          text += "▫ " + book[1] + " " + book[2] + " скачать: /download" + book[0] + "\n";
+        }
+        text += "Не нашли? Попробуйте ввести другой запрос";
 
+        this.execute(new SendMessage(chatId, text)
+            .replyMarkup(getInlineKeyboardStart()));
+
+      }
+      else {
+        sendEmptySearchResult(chatId);
+      }
   }
 
   @Override
   public void sendEmptySearchResult(long chatId) {
-
+      String text = "\uD83D\uDE29 Соррян, ничего не найденно!";
+      sendTextMessage(chatId, text);
   }
 
   //messages
   @Override
   public void sendSingleSearchResult(long chatId, String[] answer) {
-    if (answer.length < 5){
-      LogAction.warn("Массив меньше 5 элементов! отказ в отправке сообщения");
+    if (answer.length < 6) {
+      LogAction.warn("Массив меньше 6 элементов! отказ в отправке сообщения");
       return;
     }
-    String title = answer[0];
-    String author = answer[1];
-    String description = answer[2];
-    String download_url = answer[3];
-    String img_url = answer[4];
+    String id = answer[0];
+    String title = answer[1];
+    String author = answer[2];
+    String description = answer[3];
+    String download_url = answer[4];
+    String img_url = answer[5];
 
     String text =
         "<b>" + title
             + "</b>\n<i>" + author + "</i>\n" + description + "\n\n <a href=\"" + download_url
-            + "\">Скачать</a><a href=\"" + img_url +"\"> </a>";
+            + "\">Скачать</a><a href=\"" + img_url + "\"> </a>";
+
+    System.out.println(text);
 
     this.execute(new SendMessage(chatId, text)
         .parseMode(ParseMode.HTML)
@@ -114,6 +132,14 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
   private InlineKeyboardMarkup getInlineKeyboardDownload(String link) {
     InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[]{
         new InlineKeyboardButton("Скачать").url(link)
+    });
+    return inlineKeyboard;
+  }
+
+  private InlineKeyboardMarkup getInlineKeyboardStart() {
+    InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[]{
+        new InlineKeyboardButton("Последние книги").callbackData("/lastbooks"),
+        new InlineKeyboardButton("Популярные книги").callbackData("/popularbooks")
     });
     return inlineKeyboard;
   }

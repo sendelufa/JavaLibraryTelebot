@@ -38,7 +38,13 @@ public interface MainContract {
 
     void execute(String SQLQuery);
 
+    // String[] = {Id, BookTitle, Author}
     List<String[]> search(String searchText);
+
+    // String[] {Id, BookTitle, Author, Description, download_url, img_url}
+    String[] getBookById(int id);
+
+
 
   }
 
