@@ -2,6 +2,8 @@ package javalibbot.Model;
 
 import com.pengrad.telegrambot.*;
 import com.pengrad.telegrambot.model.*;
+import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
+import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.*;
 import java.util.ArrayList;
@@ -57,15 +59,27 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
     this.execute(new SendMessage(chatId, text));
   }
 
+  //messages
   @Override
   public void sendSingleSearchResult(long chatId, String[] answer) {
     String title = answer[0];
     String author = answer[1];
     String description = answer[2];
     String url = answer[3];
-    title = "<b>" + title + "</b>\n<i>" + author + "</i>\n" + description + "\n\n <a href=\"" + url
-        + "\">Скачать</a>";
+    title =
+        "<a href=\"https://chubarov.if.ua/images/book_design_2.jpg?crc=502489758\">.</a><b>" + title
+            + "</b>\n<i>" + author + "</i>\n" + description + "\n\n <a href=\"" + url
+            + "\">Скачать</a>";
     System.out.println(title);
-    this.execute(new SendMessage(chatId, title).parseMode(ParseMode.HTML));
+    this.execute(new SendMessage(chatId, title)
+        .parseMode(ParseMode.HTML)
+        .replyMarkup(getInlineKeyboardDownload(url)));
+  }
+
+  private InlineKeyboardMarkup getInlineKeyboardDownload(String link) {
+    InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[]{
+        new InlineKeyboardButton("Скачать").url(link)
+    });
+    return inlineKeyboard;
   }
 }
