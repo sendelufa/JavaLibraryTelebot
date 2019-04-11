@@ -1,6 +1,7 @@
 package javalibbot;
 
 import com.pengrad.telegrambot.model.Update;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javalibbot.Model.Exceptions.ShortDelayTimeBetweenUpdates;
@@ -14,12 +15,20 @@ public interface MainContract {
 
     void startUpdate(int delayMillis) throws ShortDelayTimeBetweenUpdates;
 
+    int getDelay();
+
     //messages
     void sendTextMessage(long chatId, String text);
 
     void sendSingleSearchResult(long chatId, String[] answer);
 
-    int getDelay();
+    void sendStartMessage(long chatId);
+
+    void sendHelpMessage(long chatId);
+
+    void sendListSearchResult(long chatId, List<String[]> list);
+
+    void sendEmptySearchResult(long chatId);
   }
 
   //get data from db

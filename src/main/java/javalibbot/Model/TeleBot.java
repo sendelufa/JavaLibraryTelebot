@@ -68,6 +68,26 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
     this.execute(new SendMessage(chatId, text));
   }
 
+  @Override
+  public void sendStartMessage(long chatId) {
+    this.execute(new SendMessage(chatId, "Наберите текст для поиска или выберите пункт в меню"));
+  }
+
+  @Override
+  public void sendHelpMessage(long chatId) {
+
+  }
+
+  @Override
+  public void sendListSearchResult(long chatId, List<String[]> list) {
+
+  }
+
+  @Override
+  public void sendEmptySearchResult(long chatId) {
+
+  }
+
   //messages
   @Override
   public void sendSingleSearchResult(long chatId, String[] answer) {
@@ -78,18 +98,17 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
     String title = answer[0];
     String author = answer[1];
     String description = answer[2];
-    String url = answer[3];
+    String download_url = answer[3];
     String img_url = answer[4];
 
-    long ms = System.currentTimeMillis();
     String text =
         "<b>" + title
-            + "</b>\n<i>" + author + "</i>\n" + description + "\n\n <a href=\"" + url
+            + "</b>\n<i>" + author + "</i>\n" + description + "\n\n <a href=\"" + download_url
             + "\">Скачать</a><a href=\"" + img_url +"\"> </a>";
-    System.out.println(System.currentTimeMillis() - ms);
+
     this.execute(new SendMessage(chatId, text)
         .parseMode(ParseMode.HTML)
-        .replyMarkup(getInlineKeyboardDownload(url)));
+        .replyMarkup(getInlineKeyboardDownload(download_url)));
   }
 
   private InlineKeyboardMarkup getInlineKeyboardDownload(String link) {
