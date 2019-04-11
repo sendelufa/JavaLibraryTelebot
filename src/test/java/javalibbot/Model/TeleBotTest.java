@@ -19,8 +19,8 @@ public class TeleBotTest {
   public void sendTextMessage() {
   }
 
-  @Test (expected = ArrayIndexOutOfBoundsException.class)
-  public void sendSingleSearchResult_ANSWER_ARRAYLENGHT() throws ArrayIndexOutOfBoundsException{
+  @Test
+  public void sendSingleSearchResult_ANSWER_ARRAYLENGHT(){
     String[] answer = {};
     bot.sendSingleSearchResult(chatId, answer);
     String[] answer1 = {"1"};
