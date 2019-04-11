@@ -71,23 +71,23 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
   //messages
   @Override
   public void sendSingleSearchResult(long chatId, String[] answer) {
-    if (answer.length < 4){
-      LogAction.warn("Массив меньше 4 элементов! отказ в отправке сообщения");
+    if (answer.length < 5){
+      LogAction.warn("Массив меньше 5 элементов! отказ в отправке сообщения");
       return;
     }
-    String title, author, description, url;
-      title = answer[0];
-      author = answer[1];
-      description = answer[2];
-      url = answer[3];
+    String title = answer[0];
+    String author = answer[1];
+    String description = answer[2];
+    String url = answer[3];
+    String img_url = answer[4];
 
-
-    title =
+    long ms = System.currentTimeMillis();
+    String text =
         "<b>" + title
             + "</b>\n<i>" + author + "</i>\n" + description + "\n\n <a href=\"" + url
-            + "\">Скачать</a><a href=\"https://chubarov.if.ua/images/book_design_2.jpg?crc=502489758\"> </a>";
-    System.out.println(title);
-    this.execute(new SendMessage(chatId, title)
+            + "\">Скачать</a><a href=\"" + img_url +"\"> </a>";
+    System.out.println(System.currentTimeMillis() - ms);
+    this.execute(new SendMessage(chatId, text)
         .parseMode(ParseMode.HTML)
         .replyMarkup(getInlineKeyboardDownload(url)));
   }

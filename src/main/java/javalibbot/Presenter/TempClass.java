@@ -21,7 +21,10 @@ public class TempClass implements MainContract.ProcessQuery {
           if (text != null && text.toLowerCase().contains("привет")) {
             bot.sendTextMessage(chatId, "88");
           } else {
-            String[] answer = {"Заголовок книги", "Автор книги", "This easy-to-follow textbook teaches Java programming from first principles, as well as covering design and testing methodologies. The text is divided into two parts. Each part supports a one-semester module, the first part addressing fundamental programming concepts, and the second part building on this foundation, teaching the skills required to develop more advanced applications. ", "http://sendel.ru"};
+            String[] answer = {"Заголовок книги", "Автор книги",
+                "This easy-to-follow textbook teaches Java programming from first principles, as well as covering design and testing methodologies. The text is divided into two parts. Each part supports a one-semester module, the first part addressing fundamental programming concepts, and the second part building on this foundation, teaching the skills required to develop more advanced applications. ",
+                "http://sendel.ru",
+                "http://sendel.ru/wp-content/uploads/2012/10/1280px-05684-21-190x160.jpg"};
             bot.sendSingleSearchResult(chatId, answer);
 
           }

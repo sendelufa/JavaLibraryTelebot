@@ -29,6 +29,8 @@ public class TeleBotTest {
     bot.sendSingleSearchResult(chatId, answer2);
     String[] answer3 = {"1", "2", "3"};
     bot.sendSingleSearchResult(chatId, answer3);
+    String[] answer4 = {"1", "2", "3", "4"};
+    bot.sendSingleSearchResult(chatId, answer4);
   }
 
   @Test
