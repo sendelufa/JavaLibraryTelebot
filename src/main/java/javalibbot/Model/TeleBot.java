@@ -9,11 +9,14 @@ import com.pengrad.telegrambot.request.*;
 import java.util.ArrayList;
 import java.util.List;
 import javalibbot.MainContract;
+import javalibbot.MainContract.LogAction;
+import javalibbot.Model.Exceptions.ShortDelayTimeBetweenUpdates;
 
 public class TeleBot extends TelegramBot implements MainContract.Bot {
 
   //cache of tasks
   private List<Update> updateTask = new ArrayList<>();
+  private int delay = 500;
 
   public TeleBot(String Token) {
     super(Token);
@@ -30,7 +33,13 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
   }
 
   @Override
-  public void startUpdate(int delayMillis) {
+  public void startUpdate(int delayMillis) throws ShortDelayTimeBetweenUpdates {
+    delay = delayMillis;
+    if (delay < 500){
+      delay = 500;
+      throw new ShortDelayTimeBetweenUpdates();
+    }
+
     Thread th = new Thread(() -> {
       //index of last get message from bot
       int m = 0;
@@ -44,7 +53,7 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
         }
 
         try {
-          Thread.sleep(delayMillis);
+          Thread.sleep(delay);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -62,14 +71,21 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
   //messages
   @Override
   public void sendSingleSearchResult(long chatId, String[] answer) {
-    String title = answer[0];
-    String author = answer[1];
-    String description = answer[2];
-    String url = answer[3];
+    if (answer.length < 4){
+      LogAction.warn("Массив меньше 4 элементов! отказ в отправке сообщения");
+      return;
+    }
+    String title, author, description, url;
+      title = answer[0];
+      author = answer[1];
+      description = answer[2];
+      url = answer[3];
+
+
     title =
-        "<a href=\"https://chubarov.if.ua/images/book_design_2.jpg?crc=502489758\">.</a><b>" + title
+        "<b>" + title
             + "</b>\n<i>" + author + "</i>\n" + description + "\n\n <a href=\"" + url
-            + "\">Скачать</a>";
+            + "\">Скачать</a><a href=\"https://chubarov.if.ua/images/book_design_2.jpg?crc=502489758\"> </a>";
     System.out.println(title);
     this.execute(new SendMessage(chatId, title)
         .parseMode(ParseMode.HTML)
@@ -81,5 +97,9 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
         new InlineKeyboardButton("Скачать").url(link)
     });
     return inlineKeyboard;
+  }
+
+  public int getDelay() {
+    return delay;
   }
 }
