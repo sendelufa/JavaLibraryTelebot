@@ -7,10 +7,12 @@ import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javalibbot.MainContract;
 import javalibbot.MainContract.LogAction;
 import javalibbot.Model.Exceptions.ShortDelayTimeBetweenUpdates;
+import javalibbot.config.ConfigContainer;
 
 public class TeleBot extends TelegramBot implements MainContract.Bot {
 
@@ -81,26 +83,35 @@ public class TeleBot extends TelegramBot implements MainContract.Bot {
 
   @Override
   public void sendListSearchResult(long chatId, List<String[]> list) {
-      String text = "";
-      if (list != null && list.size() > 0){
-        for (String[] book : list){
-          text += "▫ " + book[1] + " " + book[2] + " скачать: /download" + book[0] + "\n";
+    String text = "";
+    if (list != null && list.size() > 0) {
+      Iterator<String[]> iterator = list.iterator();
+
+      while (iterator.hasNext()) {
+        String[] book = iterator.next();
+        String id = book[0];
+        String title = book[1];
+        String author = book[2];
+
+        text += "\uD83D\uDCD7 <b>" + title + "</b> " + author + "\n Скачать: " + ConfigContainer.getDownloadRequest() + id;
+        if (iterator.hasNext()) {
+          text += "\n\n";
         }
-        text += "Не нашли? Попробуйте ввести другой запрос";
-
-        this.execute(new SendMessage(chatId, text)
-            .replyMarkup(getInlineKeyboardStart()));
-
       }
-      else {
-        sendEmptySearchResult(chatId);
-      }
+      text += "\n\n<i>Не нашли?</i> Попробуйте ввести другой запрос";
+
+      this.execute(new SendMessage(chatId, text).parseMode(ParseMode.HTML)
+          .replyMarkup(getInlineKeyboardStart()));
+
+    } else {
+      sendEmptySearchResult(chatId);
+    }
   }
 
   @Override
   public void sendEmptySearchResult(long chatId) {
-      String text = "\uD83D\uDE29 Соррян, ничего не найденно!";
-      sendTextMessage(chatId, text);
+    String text = "\uD83D\uDE29 Соррян, ничего не найденно!";
+    sendTextMessage(chatId, text);
   }
 
   //messages
