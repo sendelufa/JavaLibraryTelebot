@@ -1,6 +1,9 @@
 package javalibbot;
 
 import com.pengrad.telegrambot.model.Update;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -34,15 +37,17 @@ public interface MainContract {
   //get data from db
   interface DBHandler {
 
-    DBHandler getInstance();
+    DBHandler instance  = LibraryDB.getInstance();
 
-    void execute(String SQLQuery);
+    ResultSet execute(String SQLQuery) throws SQLException;
 
     // String[] = {Id, BookTitle, Author}
-    List<String[]> search(String searchText);
+    List<String[]> search(String searchText) throws SQLException;
+
+    void addBook(String[] s) throws SQLException;
 
     // String[] {Id, BookTitle, Author, Description, download_url, img_url}
-    String[] getBookById(int id);
+    String[] getBookById(int id) throws SQLException;
 
 
 
